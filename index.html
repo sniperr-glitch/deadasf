@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body,html{width:100%;height:100%;overflow:hidden}
+
+/* ================= PAGE 1 ================= */
+#page1{
+  position:absolute;inset:0;
+  display:flex;justify-content:center;align-items:center;
+  background: radial-gradient(circle at top,#ff758c,#ff7eb3,#ffc3a0);
+}
+
+/* Floating hearts */
+.bg-heart{
+  position:absolute;top:-20px;
+  animation:fall linear infinite;
+}
+@keyframes fall{to{transform:translateY(110vh);}}
+
+/* Mailbox */
+.mailbox{
+  width:200px;height:200px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  display:flex;justify-content:center;align-items:center;
+  flex-direction:column;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  cursor:pointer;
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* Letter */
+.letter{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:white;
+  border-radius:20px;
+  padding:30px 40px;
+  text-align:center;
+  width:320px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  opacity:0;
+  transition:.7s ease;
+}
+.letter.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+.letter h1{font-family:'Dancing Script',cursive;color:#ff4b6e}
+.letter p{font-family:'Pacifico',cursive;color:#ff2e5f}
+
+/* ================= PAGE 2 ================= */
+#page2{
+  position:absolute;inset:0;
+  display:none;
+  background:radial-gradient(circle at top,#ff5f8f,#ff8fab,#ffd6e0);
+  font-family:'Pacifico',cursive;
+}
+
+.title{
+  position:absolute;top:18px;width:100%;
+  text-align:center;color:white;
+}
+.title h1{font-family:'Dancing Script',cursive;font-size:40px}
+
+/* Flowers */
+.flower{
+  position:absolute;top:-30px;font-size:22px;
+  animation:fall linear infinite;
+}
+
+/* Hearts */
+.heart{
+  position:absolute;font-size:40px;cursor:pointer;
+  transition:.4s ease;
+}
+
+/* Notification */
+.notice{
+  position:fixed;bottom:30px;left:50%;
+  transform:translateX(-50%);
+  background:white;color:#ff2e6c;
+  padding:12px 22px;border-radius:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+  animation:pop .4s ease;
+}
+@keyframes pop{
+  from{transform:translateX(-50%) scale(.7);opacity:0}
+  to{transform:translateX(-50%) scale(1);opacity:1}
+}
+
+/* Overlay */
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;justify-content:center;align-items:center;
+}
+.card{
+  background:white;padding:25px;
+  border-radius:25px;text-align:center;width:300px;
+}
+.card img{width:100%;border-radius:18px}
+.card p{color:#ff2e6c}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC PLAYER -->
+<audio id="player"></audio>
+
+<!-- PAGE 1 -->
+<div id="page1">
+  <div class="mailbox" id="mailbox">
+    <div>💌</div>
+    <div>Click me 💖</div>
+  </div>
+
+  <div class="letter" id="letter">
+    <h1>Hey Gorgeous 😏❤️</h1>
+    <p>Looks like you’ve finally opened my heart… don’t get used to it too fast 😜💌</p>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2">
+  <div class="title">
+    <h1>Touch the hearts 😏</h1>
+    <p>They’re shy… but not heartless 💖</p>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="card">
+      <img id="photo">
+      <p id="line"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* PAGE 1 hearts */
+for(let i=0;i<30;i++){
+  const h=document.createElement("div");
+  h.className="bg-heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"%";
+  h.style.fontSize=15+Math.random()*25+"px";
+  h.style.animationDuration=6+Math.random()*6+"s";
+  document.body.appendChild(h);
+}
+
+/* PAGE 1 logic */
+const mailbox=document.getElementById("mailbox");
+const letter=document.getElementById("letter");
+let first=false, opened=false;
+
+mailbox.onclick=()=>{
+  if(!first){
+    alert("Oops… more love needed 💖 Click again 😉");
+    first=true;
+  }else if(!opened){
+    alert("Aha! ❤️ More love successfully found 😉");
+    opened=true;
+    letter.classList.add("show");
+    setTimeout(openPage2,2000);
+  }
+};
+
+/* OPEN PAGE 2 */
+function openPage2(){
+  page1.style.display="none";
+  page2.style.display="block";
+
+  for(let i=0;i<30;i++){
+    const f=document.createElement("div");
+    f.className="flower";
+    f.innerHTML="🌸";
+    f.style.left=Math.random()*100+"%";
+    f.style.animationDuration=6+Math.random()*6+"s";
+    page2.appendChild(f);
+  }
+}
+
+/* PAGE 2 DATA — CHANGE SONGS HERE */
+const surprises=[
+ {img:"images/p1.jpeg",text:"Tum muskura do toh lagta hai,\nSaari duniya meri ho gayi 💖",song:"songs/song1.mp3"},
+ {img:"images/p2.jpeg",text:"Tum paas ho ya na ho,\nDil bas tumhe hi dhoondta hai 😌",song:"songs/song2.mp3"},
+ {img:"images/p3.png",text:"Tumhari ek nazar ka asar hai,\nWarna hum itne soft nahi 😉",song:"songs/song3.mp3"},
+ {img:"images/p4.png",text:"Tum thodi si shararat ho,\nAur main poori tarah fasa hua 😏",song:"songs/song4.mp3"},
+ {img:"images/p5.png",text:"Tumhara naam aate hi,\nDil smile mode mein chala jaata hai 💘",song:"songs/song5.mp3"},
+ {img:"images/p6.png",text:"Aakhri nahi ho tum,\nPar sabse khaas zaroor ho ❤️",song:"songs/song6.mp3"}
+];
+
+const notices=[
+"Aww 😳 almost had it","Hehe… too slow 😉","Careful… hearts bite 💖",
+"Ooppss 😏 it ran away","You’re making it nervous 😌"
+];
+
+const player=document.getElementById("player");
+
+function showNotice(t){
+  const n=document.createElement("div");
+  n.className="notice";
+  n.innerText=t;
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),1500);
+}
+
+/* Hearts */
+surprises.forEach((d,i)=>{
+  let tries=0;
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=10+i*13+"%";
+  h.style.top="220px";
+
+  h.onclick=()=>{
+    showNotice(notices[Math.floor(Math.random()*notices.length)]);
+    tries++;
+
+    if(tries<3){
+      h.style.left=Math.random()*80+"%";
+      h.style.top=150+Math.random()*300+"px";
+    }else{
+      photo.src=d.img;
+      line.innerText=d.text;
+      overlay.style.display="flex";
+      player.src=d.song;
+      player.play();
+    }
+  };
+  page2.appendChild(h);
+});
+
+/* Close overlay + stop music */
+overlay.onclick=()=>{
+  overlay.style.display="none";
+  player.pause();
+  player.currentTime=0;
+};
+</script>
+
+</body>
+</html>
